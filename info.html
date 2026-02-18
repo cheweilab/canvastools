@@ -158,9 +158,7 @@ input, select, textarea {
     <div class="left-panel">
         <div class="illustration-placeholder"></div>
         <h1>English Help 寫作平台</h1>
-        <p>
-            免費線上寫作準備平台，助你學業成功。
-        </p>
+        <p>免費線上寫作準備平台，助你學業成功。</p>
     </div>
 
     <!-- RIGHT PANEL -->
@@ -168,7 +166,7 @@ input, select, textarea {
 
         <div class="logo">TESTING SERVICE</div>
 
-        <!-- STEP 1: Request Exam -->
+        <!-- STEP 1 -->
         <div id="step-request">
             <div class="form-group">
                 <label>Email</label>
@@ -189,14 +187,14 @@ input, select, textarea {
             <button class="btn" id="request-btn">Request Exam</button>
         </div>
 
-        <!-- STEP 2: Processing -->
+        <!-- STEP 2 -->
         <div id="step-processing" class="hidden">
             <p>Preparing your exam...</p>
             <div class="loader"></div>
             <p>You will receive a login code via email.</p>
         </div>
 
-        <!-- STEP 3: Enter Code -->
+        <!-- STEP 3 -->
         <div id="step-login" class="hidden">
             <div class="form-group">
                 <label>Enter 6-Digit Login Code</label>
@@ -206,14 +204,14 @@ input, select, textarea {
             <p class="error" id="error-msg"></p>
         </div>
 
-        <!-- STEP 4: Exam -->
+        <!-- STEP 4 -->
         <div id="step-exam" class="hidden">
             <h3 id="exam-topic"></h3>
             <div class="exam-question">
                 <p><strong>Question 1:</strong> Describe a memorable trip you have taken.</p>
-                <textarea rows="6" placeholder="Write your response here..."></textarea>
+                <textarea rows="6" id="exam-answer" placeholder="Write your response here..."></textarea>
             </div>
-            <button id="request" class="btn" onclick="submitExam()">Submit Answer</button>
+            <button id="submit-btn" class="btn">Submit Answer</button>
         </div>
 
     </div>
@@ -225,6 +223,7 @@ let selectedTopic = "";
 
 const requestBtn = document.getElementById("request-btn");
 const loginBtn = document.getElementById("login-btn");
+const submitBtn = document.getElementById("submit-btn");
 
 const stepRequest = document.getElementById("step-request");
 const stepProcessing = document.getElementById("step-processing");
@@ -232,19 +231,21 @@ const stepLogin = document.getElementById("step-login");
 const stepExam = document.getElementById("step-exam");
 
 function showStep(step) {
-    stepRequest.classList.add("hidden");
-    stepProcessing.classList.add("hidden");
-    stepLogin.classList.add("hidden");
-    stepExam.classList.add("hidden");
+    [stepRequest, stepProcessing, stepLogin, stepExam]
+        .forEach(s => s.classList.add("hidden"));
     step.classList.remove("hidden");
 }
 
-requestBtn.addEventListener("click", function() {
+/* REQUEST EXAM */
+requestBtn.addEventListener("click", function () {
 
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.trim();
     selectedTopic = document.getElementById("topic").value;
 
-    if (!email || !selectedTopic) return;
+    if (!email.includes("@") || !selectedTopic) {
+        alert("Please enter a valid email and select a topic.");
+        return;
+    }
 
     generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -255,13 +256,19 @@ requestBtn.addEventListener("click", function() {
 
     setTimeout(() => {
         showStep(stepLogin);
-    }, 3000);
+    }, 2000);
 });
 
-loginBtn.addEventListener("click", function() {
+/* LOGIN */
+loginBtn.addEventListener("click", function () {
 
-    const enteredCode = document.getElementById("login-code").value;
+    const enteredCode = document.getElementById("login-code").value.trim();
     const errorMsg = document.getElementById("error-msg");
+
+    if (!generatedCode) {
+        errorMsg.innerText = "Please request an exam first.";
+        return;
+    }
 
     if (enteredCode === generatedCode) {
         document.getElementById("exam-topic").innerText = "Topic: " + selectedTopic;
@@ -272,16 +279,26 @@ loginBtn.addEventListener("click", function() {
     }
 });
 
-   
-    request.addEventListener('click', function() {
-        // Redirect to the specified URL
-        window.location.href = 'https://cheweilab.github.io/canvastools/index.html';
-    });
+/* CLEAR ERROR WHEN TYPING */
+document.getElementById("login-code").addEventListener("input", () => {
+    document.getElementById("error-msg").innerText = "";
+});
 
+/* SUBMIT EXAM */
+submitBtn.addEventListener("click", function () {
 
-function submitExam() {
-    alert("Exam submitted successfully (wireframe demo).");
-}
+    const answer = document.getElementById("exam-answer").value.trim();
+
+    if (!answer) {
+        alert("Please write your answer before submitting.");
+        return;
+    }
+
+    alert("Exam submitted successfully.");
+
+    // Redirect
+    window.location.href = "https://cheweilab.github.io/canvastools/index.html";
+});
 </script>
 
 </body>
