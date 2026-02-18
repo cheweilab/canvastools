@@ -1,232 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ESL Testing Service</title>
 
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.page {
-  display: none;
-  width: 100%;
-  max-width: 420px;
+.container {
+    width: 1100px;
+    height: 650px;
+    background: #ffffff;
+    display: flex;
+    border: 1px solid #ccc;
 }
 
-.page.active {
-  display: block;
+/* LEFT PANEL */
+.left-panel {
+    width: 50%;
+    background: #e9e9e9;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #ccc;
+    text-align: center;
 }
 
-.card {
-  background: #ffffff;
-  padding: 30px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+.illustration-placeholder {
+    width: 250px;
+    height: 250px;
+    border: 2px dashed #bbb;
+    margin-bottom: 40px;
 }
 
-h1, h2 {
-  margin-top: 0;
+.left-panel h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
+.left-panel p {
+    font-size: 14px;
+    max-width: 300px;
+    color: #555;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+    width: 50%;
+    padding: 80px 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 label {
-  font-size: 14px;
-  margin-bottom: 5px;
+    font-size: 14px;
+    margin-bottom: 6px;
 }
 
 input, select, textarea {
-  margin-bottom: 15px;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
 }
 
-button {
-  padding: 10px;
-  border: none;
-  background: #222;
-  color: white;
-  cursor: pointer;
-  border-radius: 4px;
+.btn {
+    margin-top: 20px;
+    padding: 12px;
+    background: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-button:hover {
-  background: #444;
+.btn:hover {
+    background: #555;
 }
 
 .loader {
-  border: 4px solid #eee;
-  border-top: 4px solid #222;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
+    border: 4px solid #eee;
+    border-top: 4px solid #333;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
 }
 
 @keyframes spin {
-  100% { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none;
 }
 
 .error {
-  color: red;
-  font-size: 13px;
+    color: red;
+    font-size: 13px;
+    margin-top: 10px;
 }
 
 .exam-question {
-  margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        width: 95%;
+        height: auto;
+    }
+
+    .left-panel, .right-panel {
+        width: 100%;
+        padding: 40px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE 1: Email + Topic -->
-<section id="page-request" class="page active">
-  <div class="card">
-    <h1>ESL Practice Exam</h1>
-    <p>Enter your email and choose a topic to begin.</p>
+<div class="container">
 
-    <form id="request-form">
-      <label>Email</label>
-      <input type="email" id="email" required />
-
-      <label>Practice Topic</label>
-      <select id="topic" required>
-        <option value="">Select Topic</option>
-        <option value="Speaking">Speaking</option>
-        <option value="Writing">Writing</option>
-        <option value="Reading">Reading</option>
-        <option value="Listening">Listening</option>
-      </select>
-
-      <button type="submit">Request Exam</button>
-    </form>
-  </div>
-</section>
-
-<!-- PAGE 2: Processing -->
-<section id="page-processing" class="page">
-  <div class="card">
-    <h2>Preparing Your Exam...</h2>
-    <p>Please wait while we generate your test.</p>
-    <div class="loader"></div>
-    <p>You will receive a login code via email.</p>
-  </div>
-</section>
-
-<!-- PAGE 3: Enter Code -->
-<section id="page-login" class="page">
-  <div class="card">
-    <h2>Enter Login Code</h2>
-    <p>Check your email and enter the 6-digit code below.</p>
-
-    <form id="login-form">
-      <input 
-        type="text" 
-        id="login-code" 
-        maxlength="6" 
-        placeholder="Enter 6-digit code"
-        required 
-      />
-      <button type="submit">Start Exam</button>
-    </form>
-
-    <p class="error" id="code-error"></p>
-  </div>
-</section>
-
-<!-- PAGE 4: Exam -->
-<section id="page-exam" class="page">
-  <div class="card">
-    <h2>Practice Exam</h2>
-    <p id="exam-topic"></p>
-
-    <div class="exam-question">
-      <p><strong>Question 1:</strong> Describe a memorable trip you have taken.</p>
-      <textarea rows="6" placeholder="Write your response here..."></textarea>
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+        <div class="illustration-placeholder"></div>
+        <h1>English Help 寫作平台</h1>
+        <p>
+            免費線上寫作準備平台，助你學業成功。
+        </p>
     </div>
 
-    <button onclick="submitExam()">Submit Answer</button>
-  </div>
-</section>
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+
+        <div class="logo">TESTING SERVICE</div>
+
+        <!-- STEP 1: Request Exam -->
+        <div id="step-request">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+
+            <div class="form-group">
+                <label>Practice Topic</label>
+                <select id="topic">
+                    <option value="">Select Topic</option>
+                    <option value="Speaking">Speaking</option>
+                    <option value="Writing">Writing</option>
+                    <option value="Reading">Reading</option>
+                    <option value="Listening">Listening</option>
+                </select>
+            </div>
+
+            <button class="btn" id="request-btn">Request Exam</button>
+        </div>
+
+        <!-- STEP 2: Processing -->
+        <div id="step-processing" class="hidden">
+            <p>Preparing your exam...</p>
+            <div class="loader"></div>
+            <p>You will receive a login code via email.</p>
+        </div>
+
+        <!-- STEP 3: Enter Code -->
+        <div id="step-login" class="hidden">
+            <div class="form-group">
+                <label>Enter 6-Digit Login Code</label>
+                <input type="text" id="login-code" maxlength="6" placeholder="123456">
+            </div>
+            <button class="btn" id="login-btn">Start Exam</button>
+            <p class="error" id="error-msg"></p>
+        </div>
+
+        <!-- STEP 4: Exam -->
+        <div id="step-exam" class="hidden">
+            <h3 id="exam-topic"></h3>
+            <div class="exam-question">
+                <p><strong>Question 1:</strong> Describe a memorable trip you have taken.</p>
+                <textarea rows="6" placeholder="Write your response here..."></textarea>
+            </div>
+            <button class="btn" onclick="submitExam()">Submit Answer</button>
+        </div>
+
+    </div>
+</div>
 
 <script>
-const requestForm = document.getElementById("request-form");
-const loginForm = document.getElementById("login-form");
-
-const pages = {
-  request: document.getElementById("page-request"),
-  processing: document.getElementById("page-processing"),
-  login: document.getElementById("page-login"),
-  exam: document.getElementById("page-exam")
-};
-
 let generatedCode = "";
 let selectedTopic = "";
 
-function showPage(page) {
-  Object.values(pages).forEach(p => p.classList.remove("active"));
-  page.classList.add("active");
+const requestBtn = document.getElementById("request-btn");
+const loginBtn = document.getElementById("login-btn");
+
+const stepRequest = document.getElementById("step-request");
+const stepProcessing = document.getElementById("step-processing");
+const stepLogin = document.getElementById("step-login");
+const stepExam = document.getElementById("step-exam");
+
+function showStep(step) {
+    stepRequest.classList.add("hidden");
+    stepProcessing.classList.add("hidden");
+    stepLogin.classList.add("hidden");
+    stepExam.classList.add("hidden");
+    step.classList.remove("hidden");
 }
 
-// Step 1: Request Exam
-requestForm.addEventListener("submit", function (e) {
-  e.preventDefault();
+requestBtn.addEventListener("click", function() {
 
-  const email = document.getElementById("email").value;
-  selectedTopic = document.getElementById("topic").value;
+    const email = document.getElementById("email").value;
+    selectedTopic = document.getElementById("topic").value;
 
-  if (!selectedTopic) return;
+    if (!email || !selectedTopic) return;
 
-  // Simulated OTP generation
-  generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+    generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-  console.log("Simulated email sent to:", email);
-  console.log("Login code:", generatedCode);
+    console.log("Simulated Email:", email);
+    console.log("Generated Code:", generatedCode);
 
-  showPage(pages.processing);
+    showStep(stepProcessing);
 
-  // Simulated preparation delay (3 seconds)
-  setTimeout(() => {
-    showPage(pages.login);
-  }, 3000);
+    setTimeout(() => {
+        showStep(stepLogin);
+    }, 3000);
 });
 
-// Step 2: Login with Code
-loginForm.addEventListener("submit", function (e) {
-  e.preventDefault();
+loginBtn.addEventListener("click", function() {
 
-  const enteredCode = document.getElementById("login-code").value;
-  const error = document.getElementById("code-error");
+    const enteredCode = document.getElementById("login-code").value;
+    const errorMsg = document.getElementById("error-msg");
 
-  if (enteredCode === generatedCode) {
-    document.getElementById("exam-topic").innerText =
-      "Topic: " + selectedTopic;
-
-    error.innerText = "";
-    showPage(pages.exam);
-  } else {
-    error.innerText = "Invalid code. Please try again.";
-  }
+    if (enteredCode === generatedCode) {
+        document.getElementById("exam-topic").innerText = "Topic: " + selectedTopic;
+        errorMsg.innerText = "";
+        showStep(stepExam);
+    } else {
+        errorMsg.innerText = "Invalid code. Please try again.";
+    }
 });
 
 function submitExam() {
-  alert("Exam submitted successfully (wireframe demo).");
+    alert("Exam submitted successfully (wireframe demo).");
 }
 </script>
 
