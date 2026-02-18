@@ -213,7 +213,7 @@ input, select, textarea {
                 <p><strong>Question 1:</strong> Describe a memorable trip you have taken.</p>
                 <textarea rows="6" placeholder="Write your response here..."></textarea>
             </div>
-            <button class="btn" onclick="submitExam()">Submit Answer</button>
+            <button id="request" class="btn" onclick="submitExam()">Submit Answer</button>
         </div>
 
     </div>
@@ -271,6 +271,13 @@ loginBtn.addEventListener("click", function() {
         errorMsg.innerText = "Invalid code. Please try again.";
     }
 });
+
+   
+    request.addEventListener('click', function() {
+        // Redirect to the specified URL
+        window.location.href = 'https://cheweilab.github.io/canvastools/index.html';
+    });
+
 
 function submitExam() {
     alert("Exam submitted successfully (wireframe demo).");
