@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>English Help 広告（博物館再現）</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+/* =====================================================
+   EXHIBITION CANVAS — A2 PRINT DIMENSIONS
+===================================================== */
+
+@page { size:A2 portrait; margin:0; }
+
+body{
+  margin:0;
+  background:#777;
+  font-family:
+  "Noto Sans JP",
+  "Hiragino Kaku Gothic ProN",
+  "Yu Gothic",
+  sans-serif;
+}
+
+/* 420×594mm */
+.poster{
+  width:420mm;
+  height:594mm;
+  margin:auto;
+  position:relative;
+  background:#f6f3ea;
+  overflow:hidden;
+}
+
+/* =====================================================
+   AGED PAPER SIMULATION
+===================================================== */
+
+.poster::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(rgba(0,0,0,.025) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.4), rgba(0,0,0,.04));
+
+  background-size:2.5px 2.5px, 100% 100%;
+  mix-blend-mode:multiply;
+  opacity:.6;
+}
+
+/* =====================================================
+   INK IMPERFECTION (OFFSET PRINT)
+===================================================== */
+
+.poster::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.02);
+  filter:blur(.7px);
+  mix-blend-mode:multiply;
+}
+
+/* =====================================================
+   TYPOGRAPHIC SYSTEM
+===================================================== */
+
+.zone{ position:absolute; }
+
+/* Catch copy */
+
+.catch{
+  top:58mm;
+  left:48mm;
+}
+
+.catch .l1{
+  font-size:22pt;
+  font-weight:700;
+  letter-spacing:.14em;
+}
+
+.catch .l2{
+  font-size:18pt;
+  font-weight:700;
+}
+
+/* Product placeholder */
+
+.product{
+  top:125mm;
+  left:50%;
+  transform:translateX(-50%);
+  width:210mm;
+  height:58mm;
+  border:1pt dashed rgba(0,0,0,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#777;
+  font-weight:700;
+}
+
+/* Vertical NEW */
+
+.new{
+  top:128mm;
+  right:55mm;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-size:42pt;
+  font-weight:900;
+  letter-spacing:.28em;
+}
+
+/* Vertical body text */
+
+.body{
+  top:215mm;
+  left:65mm;
+  height:175mm;
+
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+
+  font-size:11pt;
+  line-height:2.5;
+  letter-spacing:.1em;
+}
+
+/* Decorative band */
+
+.band{
+  position:absolute;
+  bottom:170mm;
+  width:100%;
+  height:36mm;
+
+  background:
+    repeating-radial-gradient(
+      circle,
+      rgba(0,0,0,.08) 0,
+      rgba(0,0,0,.08) 1px,
+      transparent 1px,
+      transparent 7px
+    );
+  opacity:.35;
+}
+
+/* Brand block */
+
+.brand{
+  position:absolute;
+  bottom:92mm;
+  width:100%;
+  text-align:center;
+}
+
+.brand-name{
+  font-size:74pt;
+  font-weight:900;
+  letter-spacing:-0.025em;
+}
+
+.price{
+  font-size:24pt;
+  margin-left:10mm;
+  font-weight:700;
+}
+
+/* Footer features */
+
+.footer{
+  position:absolute;
+  bottom:35mm;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:42mm;
+}
+
+.footer div{
+  width:62mm;
+  height:20mm;
+  border:1pt dashed rgba(0,0,0,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10pt;
+}
+
+/* Trim marks */
+
+.trim{
+  position:absolute;
+  inset:10mm;
+  border:1px dashed rgba(0,0,0,.25);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="poster">
+
+<div class="trim"></div>
+
+<div class="zone catch">
+  <div class="l1">英語は、才能ではない。</div>
+  <div class="l2">It is your next power — English Help</div>
+</div>
+
+<div class="zone product">
+AIツール画面イメージ（English Help）
+</div>
+
+<div class="zone new">NEW</div>
+
+<div class="zone body">
+書けなかった一文が、動き出す。
+止まっていた言葉が、流れ出す。
+English Help は、
+あなたの英語に “confidence” を与えるAI。
+
+単なる添削ではない。
+It refines.
+It suggests.
+It transforms.
+
+文法を整え、
+響きを磨き、
+あなたらしい表現へ。
+
+学生にも、研究者にも、
+世界とつながるすべての人へ。
+
+英語は遠いものではない。
+It is already within you.
+English Help が、それを引き出す。
+</div>
+
+<div class="band"></div>
+
+<div class="brand">
+<span class="brand-name">English Help</span>
+<span class="price">AI POWERED</span>
+</div>
+
+<div class="footer">
+<div>Grammar Refinement</div>
+<div>Fluency Builder</div>
+</div>
+
+</div>
+
+</body>
+</html>
